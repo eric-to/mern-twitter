@@ -5,15 +5,15 @@ const db = require("./config/keys").mongoURI;
 const users = require("./routes/api/users");
 const tweets = require("./routes/api/tweets");
 const bodyParser = require('body-parser');
+const passport = require("passport");
+
+app.use(passport.initialize());
+require("./config/passport")(passport);
 
 mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log("Connected to mongoDB"))
   .catch(err => console.log(err));
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
